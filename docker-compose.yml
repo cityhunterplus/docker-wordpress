@@ -20,7 +20,7 @@ services:
       WORDPRESS_DB_PASSWORD: pass
       MYSQL_PASSWORD: testtest
     ports:
-      - "8702:80"
+      - "8888:80"
     volumes:
       - ./wordpress:/var/www/html
     depends_on:
