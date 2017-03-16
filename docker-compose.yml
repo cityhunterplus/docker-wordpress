@@ -7,12 +7,14 @@ services:
       MYSQL_DATABASE: testdb
       MYSQL_USER: test
       MYSQL_PASSWORD: testtest
+    restart: always
     #volumes:
       #- ./my.cnf:/etc/mysql/conf.d/my.cnf
       #- /var/lib/mysql
 
   wordpress_serv:
-    image: wordpress:4.7.2
+    build: wordpress
+    image: my_wordpress:4.7.3
     environment:
       WORDPRESS_DB_NAME: testdb
       WORDPRESS_DB_HOST: mysql_serv:3306
@@ -21,8 +23,10 @@ services:
       MYSQL_PASSWORD: testtest
     ports:
       - "8888:80"
+    restart: always
     volumes:
-      - ./wordpress:/var/www/html
+      #- ./html:/var/www/html
+      - "$PWD/html:/var/www/html"
     depends_on:
       - mysql_serv
     links:
