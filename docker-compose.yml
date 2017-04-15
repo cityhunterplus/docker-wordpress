@@ -1,19 +1,24 @@
 version: '2'
 services:
+  mysql_data:
+    image: busybox
+    volumes:
+      - /var/lib/mysql
+
   mysql_serv:
     image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: testdb
       MYSQL_USER: test
       MYSQL_PASSWORD: testtest
     restart: always
-    #volumes:
-      #- ./my.cnf:/etc/mysql/conf.d/my.cnf
-      #- /var/lib/mysql
+    volumes_from:
+      - mysql_data
 
   wordpress_serv:
-    build: wordpress
+    build: Dockerfile.wordpress
     image: my_wordpress:4.7.3
     environment:
       WORDPRESS_DB_NAME: testdb
@@ -22,7 +27,7 @@ services:
       WORDPRESS_DB_PASSWORD: pass
       MYSQL_PASSWORD: testtest
     ports:
-      - "8888:80"
+      - "8701:80"
     restart: always
     volumes:
       #- ./html:/var/www/html
