@@ -13,13 +13,12 @@ services:
       MYSQL_DATABASE: testdb
       MYSQL_USER: test
       MYSQL_PASSWORD: testtest
-    restart: always
     volumes_from:
       - mysql_data
 
   wordpress_serv:
     build: Dockerfile.wordpress
-    image: my_wordpress:4.7.3
+    #image: my_wordpress:4.9.4
     environment:
       WORDPRESS_DB_NAME: testdb
       WORDPRESS_DB_HOST: mysql_serv:3306
@@ -27,8 +26,7 @@ services:
       WORDPRESS_DB_PASSWORD: pass
       MYSQL_PASSWORD: testtest
     ports:
-      - "8701:80"
-    restart: always
+      - "8888:80"
     volumes:
       #- ./html:/var/www/html
       - "$PWD/html:/var/www/html"
