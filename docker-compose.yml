@@ -1,10 +1,5 @@
 version: '2'
 services:
-  mysql_data:
-    image: busybox
-    volumes:
-      - /var/lib/mysql
-
   mysql_serv:
     image: mysql:5.7
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
@@ -13,8 +8,8 @@ services:
       MYSQL_DATABASE: testdb
       MYSQL_USER: test
       MYSQL_PASSWORD: testtest
-    volumes_from:
-      - mysql_data
+    volumes:
+    - ./mysql:/var/lib/mysql
 
   wordpress_serv:
     build: Dockerfile.wordpress
@@ -24,12 +19,12 @@ services:
       WORDPRESS_DB_HOST: mysql_serv:3306
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: pass
+      WORDPRESS_DEBUG: 1
       MYSQL_PASSWORD: testtest
     ports:
       - "8888:80"
     volumes:
-      #- ./html:/var/www/html
-      - "$PWD/html:/var/www/html"
+      - ./html:/var/www/html
     depends_on:
       - mysql_serv
     links:
