@@ -1,4 +1,4 @@
-FROM wordpress:4.9.4
+FROM wordpress:5.1.1
 
 ENV TZ Asia/Tokyo
 
