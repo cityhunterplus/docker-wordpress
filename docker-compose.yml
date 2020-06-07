@@ -18,7 +18,6 @@ services:
 
   wordpress_serv:
     build: Dockerfile.wordpress
-    #image: my_wordpress:4.9.4
     environment:
       WORDPRESS_DB_NAME: testdb
       WORDPRESS_DB_HOST: mysql_serv:3306
@@ -29,7 +28,11 @@ services:
     ports:
       - "${DOCKER_MAP_PORT}:80"
     volumes:
-      - ./html:/var/www/html
+      # - ./html:/var/www/html
+      - ./wordpress/wp-content/languages:/var/www/html/wp-content/languages
+      - ./wordpress/wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wordpress/wp-content/themes:/var/www/html/wp-content/themes
+      - ./wordpress/wp-content/uploads:/var/www/html/wp-content/uploads
     depends_on:
       - mysql_serv
     links:
